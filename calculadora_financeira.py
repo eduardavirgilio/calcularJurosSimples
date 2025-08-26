@@ -37,6 +37,11 @@ def calcular_juros_simples(capital_inicial: float, taxa_anual: float, tempo_anos
         3375.00
     """
 
+    # os valores não podem ser string
+
+    if not isinstance(capital_inicial, (int, float)) or not isinstance(taxa_anual, (int, float)) or not isinstance(tempo_anos, (int, float)):
+        raise TypeError("Os valores devem ser numéricos")
+    
     # os valores não podem ser menor que 0
 
     if capital_inicial < 0:
@@ -47,17 +52,6 @@ def calcular_juros_simples(capital_inicial: float, taxa_anual: float, tempo_anos
     
     if tempo_anos < 0:
         raise ValueError("devem ser valores não-negativos")
-    
-    # os valores não podem ser string
-
-    if not isinstance(capital_inicial, (int, float)):
-        raise TypeError("Não é permitido algo diferente de número (int ou float)")
-    
-    if not isinstance(taxa_anual, (int, float)):
-        raise TypeError("Não é permitido algo diferente de número (int ou float)")
-    
-    if not isinstance(tempo_anos, (int, float)):
-        raise TypeError("Não é permitido algo diferente de número (int ou float)")
     
     #calculo do juros simples
 

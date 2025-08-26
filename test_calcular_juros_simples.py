@@ -93,10 +93,25 @@ def test_juros_simples_levanta_erro_para_valores_negativos(principal, taxa, temp
     with pytest.raises(ValueError, match="devem ser valores não-negativos"):
         calcular_juros_simples(principal, taxa, tempo)
 
+
+
 @pytest.mark.error_handling
-def test_juros_simples_levanta_erro_para_tipos_invalidos():
+@pytest.mark.parametrize(
+    "principal, taxa, tempo",
+    [
+        # Caso 1: Enviando um texto como capital
+        ("mil", 5.0, 2.0),
+        # Caso 2: Enviando uma lista como taxa
+        (1000, [5.0], 2.0),
+        # Caso 3: Enviando uma lista de string como tempo
+        (1000, 5.0, ["dois anos"]),
+    ],
+    ids=["capital_como_texto","juros_como_lista","tempo_como_lista_de_string"]
+)
+
+def test_juros_simples_levanta_erro_para_tipos_invalidos(principal, taxa, tempo):
     """Verifica se a função levanta um TypeError ao receber tipos não-numéricos."""
     # O Python levantará um TypeError naturalmente ao tentar fazer contas com strings.
     # O teste garante que esse comportamento de falha esperado aconteça.
-    with pytest.raises(TypeError):
-        calcular_juros_simples("mil", 5.0, 2.0)
+    with pytest.raises(TypeError, match="Os valores devem ser numéricos"):
+        calcular_juros_simples(principal, taxa, tempo)
